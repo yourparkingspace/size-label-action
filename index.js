@@ -96,11 +96,19 @@ async function main() {
 
   for (const label of remove) {
     debug("Removing label:", label);
-    await octokit.issues.removeLabel({
-      ...pullRequestHome,
-      issue_number: pull_number,
-      name: label
-    });
+    try {
+      await octokit.issues.removeLabel({
+        ...pullRequestHome,
+        issue_number: pull_number,
+        name: label
+      });
+    } catch (error) {
+      if (error.status === 404) {
+        debug(`Label "${label}" does not exist, skipping removal.`);
+      } else {
+        throw error;
+      }
+    }
   }
 
   debug("Success!");

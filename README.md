@@ -13,10 +13,10 @@ name: Size Label
 on: pull_request
 jobs:
   size-label:
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, ubuntu-latest, x64, linux]
     steps:
       - name: size-label
-        uses: netsells/size-label-action@master
+        uses: yourparkingspace/size-label-action@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
